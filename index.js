@@ -7,6 +7,9 @@ try {
   rotationChannel = JSON.parse(fs.readFileSync('./rotationChannel.json', 'utf-8'));
 } catch (error) {
 }
+if (!rotationChannel) {
+	rotationChannel = process.env.channel;
+}
 // https://discordapp.com/oauth2/authorize?client_id=%20651881773659062295&scope=bot&permissions=519232
 
 // const client = new CommandoClient({
@@ -35,6 +38,8 @@ client.registry
 	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 client.rotation = require('./scripts/rotation.js')(client);
+client.rotationChannel = rotationChannel;
+client.rotationData = process.env.rotation;
 
 const activity = rotationChannel ? `Error: use ${commandPrefix}bind to bind a channel` : `${commandPrefix}help`;
 

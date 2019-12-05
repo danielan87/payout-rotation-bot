@@ -6,6 +6,7 @@ const rotationFileName = path.join(__dirname, '..', 'rotation.json');
 const rotationChannelFileName = path.join(__dirname, '..', 'rotationChannel.json');
 const moment = require('moment');
 let task;
+let messageId;
 
 module.exports = (client) => {  
   async function createRotation() {
@@ -14,13 +15,14 @@ module.exports = (client) => {
     }
 
     task = cron.schedule('* * * * *', async function() {
-      console.log(rotationFileName);
       let rotationData;
       let rotationChannelData;
       try {
-        rotationData = JSON.parse(await fsPromises.readFile(rotationFileName, 'utf-8'));
-        rotationChannelData = JSON.parse(await fsPromises.readFile(rotationChannelFileName, 'utf-8'));
-        if (!rotationChannelData.channel) {
+        rotationData = client.rotationData;
+        rotationChannelData = client.channel;
+//         rotationData = JSON.parse(await fsPromises.readFile(rotationFileName, 'utf-8'));
+//         rotationChannelData = JSON.parse(await fsPromises.readFile(rotationChannelFileName, 'utf-8'));
+        if (!rotationChannelData) {
           throw Error("Rotation channel data is corrupted: Could not find channel id");
         }
       } catch (error) {
@@ -52,13 +54,12 @@ module.exports = (client) => {
       }
 
       console.log(JSON.stringify(displayRotation));
-      const payoutChannel = await client.channels.get(rotationChannelData.channel);
-      if (!rotationChannelData.message) {
+      const payoutChannel = await client.channels.get(rotationChannelData);
+      if (messageId) {
         const message = await payoutChannel.send(createEmbedFromRotation(client, displayRotation));
-        rotationChannelData.message = message.id.toString();
-        await fsPromises.writeFile(rotationChannelFileName, JSON.stringify(rotationChannelData, null, 2));
+        messageId = message.id.toString();
       } else {
-        const message = await payoutChannel.fetchMessage(rotationChannelData.message);
+        const message = await payoutChannel.fetchMessage(messageId);
         await message.edit(createEmbedFromRotation(client, displayRotation));
       }
 //       const rotationsToPrint = await rotationClient.db.getRotationsToPrint();
