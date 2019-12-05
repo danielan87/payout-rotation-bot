@@ -9,10 +9,16 @@ try {
 }
 // https://discordapp.com/oauth2/authorize?client_id=%20651881773659062295&scope=bot&permissions=519232
 
+// const client = new CommandoClient({
+// 	commandPrefix: botConfig.commandPrefix,
+// 	owner: botConfig.owner,
+// 	invite: botConfig.invite,
+// });
+
 const client = new CommandoClient({
-	commandPrefix: botConfig.commandPrefix,
-	owner: botConfig.owner,
-	invite: botConfig.invite,
+	commandPrefix: process.env.commandPrefix,
+	owner: process.env.owner,
+	invite: process.env.invite,
 });
 
 client.registry
@@ -29,7 +35,7 @@ client.registry
 
 client.rotation = require('./scripts/rotation.js')(client);
 
-const activity = rotationChannel ? `Error: use ${botConfig.commandPrefix}bind to bind a channel` : `${botConfig.commandPrefix}help`;
+const activity = rotationChannel ? `Error: use ${process.env.commandPrefix}bind to bind a channel` : `${process.env.commandPrefix}help`;
 
 client.hasRotationChannel = !!rotationChannel;
 
@@ -40,7 +46,7 @@ client.once('ready', () => {
 
 client.on('error', console.error);
 
-client.login(botConfig.botToken);
+client.login(process.env.botToken);
 
 if (rotationChannel) {
 	client.rotation.createRotation();
