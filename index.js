@@ -39,7 +39,7 @@ client.registry
 
 client.rotation = require('./scripts/rotation.js')(client);
 client.rotationChannel = rotationChannel;
-client.rotationData = process.env.rotation;
+client.rotationData = JSON.parse(process.env.rotation);
 
 const activity = rotationChannel ? `Error: use ${commandPrefix}bind to bind a channel` : `${commandPrefix}help`;
 
