@@ -53,13 +53,12 @@ module.exports = (client) => {
       console.log(JSON.stringify(displayRotation));
       const payoutChannel = await client.channels.get(rotationChannelData.channel);
       if (!rotationChannelData.message) {
-        const message = await payoutChannel.send(JSON.stringify(displayRotation));
+        const message = await payoutChannel.send(createEmbedFromRotation(client, displayRotation));
         rotationChannelData.message = message.id.toString();
-        console.log(JSON.stringify(rotationChannelData));
         await fsPromises.writeFile(rotationChannelFileName, JSON.stringify(rotationChannelData, null, 2));
       } else {
         const message = await payoutChannel.fetchMessage(rotationChannelData.message);
-        await message.edit(JSON.stringify(displayRotation));
+        await message.edit(createEmbedFromRotation(client, displayRotation));
       }
 //       const rotationsToPrint = await rotationClient.db.getRotationsToPrint();
   //     rotationClient.logger.debug(`new rotations: ${rotationsToPrint.length} rotations to process`);
@@ -85,4 +84,29 @@ module.exports = (client) => {
   return {
     createRotation: createRotation
   };
+}
+
+function createEmbedFromRotation(client, rotation) {
+  const durations = Object.keys(rotation);
+  durations.sort((a, b) => Number(a) - Number(b));
+  const fields = [];
+  for (const duration of durations) {
+    const payoutdata = rotation[duration];
+    fields.push({ name: `${payoutdata.hours}:${payoutdata.minutes}`, value: payoutdata.players.join(", ") });
+  }
+  
+  return { embed: { 
+    color: 3447003,
+    author: {
+      name: client.user.username,
+      icon_url: client.user.avatarURL
+    },
+    title: "Payout",
+    fields: fields,
+    timestamp: new Date(),
+    footer: {
+      icon_url: client.user.avatarURL,
+      text: "Powered by Jubei"
+    }
+  }};
 }

@@ -18,7 +18,7 @@ try {
 const commandPrefix = process.env.commandPrefix || "?";
 const client = new CommandoClient({
 	commandPrefix: commandPrefix,
-	owner: process.env.owner,
+	owner: process.env.owner || botConfig.owner,
 	invite: botConfig.invite,
 });
 
@@ -47,7 +47,7 @@ client.once('ready', () => {
 
 client.on('error', console.error);
 
-client.login(process.env.botToken);
+client.login(process.env.botToken || botConfig.botToken);
 
 if (rotationChannel) {
 	client.rotation.createRotation();
