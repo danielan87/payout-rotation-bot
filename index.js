@@ -46,6 +46,7 @@ client.once('ready', () => {
 
 client.on('error', console.error);
 
+console.log("process.env.botToken: " + process.env.botToken);
 client.login(process.env.botToken);
 
 if (rotationChannel) {
