@@ -18,7 +18,7 @@ try {
 const client = new CommandoClient({
 	commandPrefix: process.env.commandPrefix,
 	owner: process.env.owner,
-	invite: process.env.invite,
+	invite: botConfig.invite,
 });
 
 client.registry
