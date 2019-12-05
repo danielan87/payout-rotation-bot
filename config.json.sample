@@ -1,0 +1,6 @@
+{
+  "commandPrefix": "?",
+  "owner": "123456789012345678", // ID of the owner (18 digits)
+  "invite": "https://discord.gg/bRCvFy9",
+  "botToken": "NjUxODgxNzczNjU5MDYyMjk1.XegWiw.5t0JEZTvCDW0aAmKbvranqPnn9s"
+}
