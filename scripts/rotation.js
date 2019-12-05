@@ -55,7 +55,7 @@ module.exports = (client) => {
 
       console.log(JSON.stringify(displayRotation));
       const payoutChannel = await client.channels.get(rotationChannelData);
-      if (messageId) {
+      if (!messageId) {
         const message = await payoutChannel.send(createEmbedFromRotation(client, displayRotation));
         messageId = message.id.toString();
       } else {
