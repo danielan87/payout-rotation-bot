@@ -15,8 +15,9 @@ try {
 // 	invite: botConfig.invite,
 // });
 
+const commandPrefix = process.env.commandPrefix || "?";
 const client = new CommandoClient({
-	commandPrefix: process.env.commandPrefix,
+	commandPrefix: commandPrefix,
 	owner: process.env.owner,
 	invite: botConfig.invite,
 });
@@ -35,7 +36,7 @@ client.registry
 
 client.rotation = require('./scripts/rotation.js')(client);
 
-const activity = rotationChannel ? `Error: use ${process.env.commandPrefix}bind to bind a channel` : `${process.env.commandPrefix}help`;
+const activity = rotationChannel ? `Error: use ${commandPrefix}bind to bind a channel` : `${commandPrefix}help`;
 
 client.hasRotationChannel = !!rotationChannel;
 
