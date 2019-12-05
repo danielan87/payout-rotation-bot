@@ -46,7 +46,8 @@ module.exports = (client) => {
         }
 
         const hoursLeft = Math.floor(durationInMinutes / 60);
-        const minutesLeft = durationInMinutes - hoursLeft * 60;
+        let minutesLeft = durationInMinutes - hoursLeft * 60;
+        minutesLeft = minutesLeft < 10 ? "0" + minutesLeft : minutesLeft;
         displayRotation[durationInMinutes] = { hours: hoursLeft, minutes: minutesLeft, players: rotationData[payoutTime] };
       }
 
