@@ -19,7 +19,7 @@ module.exports = (client) => {
       let rotationChannelData;
       try {
         rotationData = client.rotationData;
-        rotationChannelData = client.channel;
+        rotationChannelData = client.rotationChannel;
 //         rotationData = JSON.parse(await fsPromises.readFile(rotationFileName, 'utf-8'));
 //         rotationChannelData = JSON.parse(await fsPromises.readFile(rotationChannelFileName, 'utf-8'));
         if (!rotationChannelData) {
