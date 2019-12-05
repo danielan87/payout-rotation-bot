@@ -29,10 +29,14 @@ This little tool will help you track upcoming payouts for your shard. It is inde
 10) Click on "More" > "Restart all dynos"
 11) To make sure your bot is up and running, click on "More" > "View logs". You should see `Logged in as <Your bot's name> (Your bot's id)`
 
-Now that it's running, you need to invite it to your shard! Modify and use the link below:
-`https://discordapp.com/oauth2/authorize?client_id=<Your bot's client id>&scope=bot&permissions=519232`
-
-
 *NB: feel free to fork this repo to activate automatic deployments. You will need to handle the updates on your fork yourself!*
+
+## Usage
+1) Now that it's running, you need to invite it to your shard! Modify and use the link below:
+`https://discordapp.com/oauth2/authorize?client_id=<Your bot's client id>&scope=bot&permissions=519232`
+2) The first thing you want to do is to bind a channel. This channel will be used to display the payout. In your server, create a new channel (for this example I am calling it "payout"). Make sure the bot has read/write access on that channel! Assuming you didn't change the prefix, use: `?bind #payout` (change the prefix and the name of the channel accordingly). **Note that you can only bind ONE channel! This bot will not work on multiple shards! You will need to create a separate one**
+3) Now all that is left is to add players! Assuming you want to add a player named "Captain Ahab" at 10pm UTC, type `?rotationadd 2200 Captain Ahab`. You can also type `radd 2200 Captain Ahab` or `ra 2200 Captain Ahab`. The time will always be in **UTC Military time!** So if your payout is at 6pm EST, you should convert it to UTC first (11pm -> 2300).
+4) To remove a player, use the `rotationremove` command. For example, say at payout 2200 we have 3 players, Captain Ahab, Moby Dick and Herman Melville in that order. you want to type `rotationremove 2200 1` (1 is the position of the player on the list!). You can also type `rremove`, `rrem` or `rr`.
+
 
 Please report any bug and suggestions to me on discord: JubeiNabeshin#8860 (you can find me on https://discord.gg/bRCvFy9)
