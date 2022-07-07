@@ -17,7 +17,7 @@
     "discord": "^0.8.2",
     "discord.js": "^11.5.1",
     "discord.js-commando": "^0.10.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-cron": "^2.0.3"
   }
 }
